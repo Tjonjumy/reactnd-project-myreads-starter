@@ -45,8 +45,7 @@ class BooksApp extends React.Component {
                     />
                 }/>
                 <Route path="/search" element={
-                    <SearchPage 
-                        books={this.state.books}
+                    <SearchPage
                         onUpdateShelf={onUpdateShelf}
                     />
                 }/>
