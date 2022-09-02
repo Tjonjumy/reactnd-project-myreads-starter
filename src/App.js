@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css'
+import * as BooksAPI from './BooksAPI.js';
+// Import Components
+import MainPage from './Components/MainPage';
+import SearchPage from './Components/Search/SearchPage';
+
+class BooksApp extends React.Component {
+    state = {
+        books: []
+    }
+
+    componentDidMount() {
+        BooksAPI.getAll()
+        .then((books) => {
+            this.setState(() => ({
+                books
+            }))
+        })
+    }
+
+    render() {
+
+        // Update shelf
+        const onUpdateShelf = (book, shelf) => {  
+            BooksAPI.update(book, shelf)
+            .then((res) => {
+                book.shelf = shelf
+                this.setState((currentState) => ({
+                    books: currentState.books.filter((e) => {
+                    return e.id !== book.id
+                    }).concat([book])
+                }))
+            })
+        }
+
+        return (
+            <Routes>
+                <Route exact path="/" element={
+                    <MainPage 
+                        books={this.state.books}
+                        onUpdateShelf={onUpdateShelf}
+                    />
+                }/>
+                <Route path="/search" element={
+                    <SearchPage 
+                        books={this.state.books}
+                        onUpdateShelf={onUpdateShelf}
+                    />
+                }/>
+            </Routes>
+        );
+    }
 }
 
-export default App;
+export default BooksApp;
