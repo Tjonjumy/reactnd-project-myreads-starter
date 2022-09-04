@@ -205,3 +205,7 @@ button:active {
 button {
   cursor: pointer;
 }
+.page-not-found {
+  text-align: center;
+  margin-top: 5rem;
+}

@@ -6,6 +6,7 @@ import * as BooksAPI from './BooksAPI.js';
 // Import Components
 import MainPage from './Components/MainPage';
 import SearchPage from './Components/Search/SearchPage';
+import ComponentNotMatch from './Components/ComponentNotMatch';
 
 class BooksApp extends React.Component {
     state = {
@@ -46,9 +47,11 @@ class BooksApp extends React.Component {
                 }/>
                 <Route path="/search" element={
                     <SearchPage
+                        books={this.state.books}
                         onUpdateShelf={onUpdateShelf}
                     />
                 }/>
+                <Route path="*" element={<ComponentNotMatch />} />
             </Routes>
         );
     }
