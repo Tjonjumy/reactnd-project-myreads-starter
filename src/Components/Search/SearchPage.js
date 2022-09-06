@@ -12,7 +12,7 @@ class SearchPage extends React.Component {
     }
 
     render() {
-        const {onUpdateShelf} = this.props;
+        const {onUpdateShelf, books} = this.props;
 
         const updateResultSearch = (result) => {
             this.setState(() => ({
@@ -44,6 +44,12 @@ class SearchPage extends React.Component {
         let lstSearchResults = [];
         if (this.state.searchBooks.error !== 'empty query') {
             lstSearchResults = this.state.searchBooks.map(book => {
+                const foundBook = books.find(bookSearch => book.id === bookSearch.id);
+                if (foundBook) {
+                    book.shelf = foundBook.shelf;
+                } else {
+                    book.shelf = "none";
+                }
                 return (
                     <Book key={book.id} book={book} onUpdateShelf={onUpdateShelf}/>
                 )

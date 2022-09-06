@@ -1,8 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import '../App.css';
 
 class ShelfClassification extends React.Component {
+    propTypes = {
+        onUpdateShelf: PropTypes.func.isRequired,
+        book: PropTypes.object.isRequired
+    }
     render() {
         const { onUpdateShelf, book } = this.props
 
